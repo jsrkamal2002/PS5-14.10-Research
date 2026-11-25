@@ -102,7 +102,7 @@ Follow-up probes are pre-written:
 These need a `kernel_base` value filled in from the leak. The sysent table is at kernel_base + 0xe6e5c0.
 
 ## KEY REFERENCE FILES
-- `docs/DEAD_ENDS_REFERENCE.md` — dead ends and Lua 5.1 constraints
+- `docs/DEAD_ENDS_REFERENCE.md` — the 50+ documented dead ends
 - `docs/ATTACK_PRIORITY_REFERENCE.md` — current priorities, extracted from the removed `CLAUDE.md`
 - `docs/VERIFIED_HANDLER_ANALYSIS.md` — 8 critical findings from 13.60 handler RE (4 byte-verified, 4 plausible)
 - `docs/WEBKIT_FINDINGS.md` — WebKit entry vector (JSC Bug 317632, heap corruption + OOB read on 14.10)
@@ -113,7 +113,7 @@ These need a `kernel_base` value filled in from the leak. The sysent table is at
 - `tools/analyze_result.py` — auto-analyzer for probe output (if it exists)
 
 ## RULES
-1. **Read `docs/DEAD_ENDS_REFERENCE.md` fully before writing any probe.** It has the Lua 5.1 constraints, the make_syscall pattern, uint64 requirements, and 50+ documented dead ends.
+1. **Read `docs/DEAD_ENDS_REFERENCE.md` fully before writing any probe — it documents the 50+ known dead ends.** The Lua 5.1 make_syscall/uint64 patterns are visible in the probe sources (see `docs/PROBE_INDEX.md` and `probes/phase14_final_push/`).
 2. **Verify claims against raw bytes before acting on them.** The overnight batch had syscall mislabeling errors. Cross-check handler numbers against `docs/ps5_13.60_sysent.json`.
 3. **Every address must be re-derived per connection.** Never hardcode addresses. Use dynlib_get_info or tostring(syscall.pipe).
 4. **pcall everything.** XO page reads and bad syscall args kill the process.
